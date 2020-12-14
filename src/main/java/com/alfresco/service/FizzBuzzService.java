@@ -1,13 +1,18 @@
-package com.alfresco;
+package com.alfresco.service;
+
+import com.alfresco.type.FizzBuzzType;
+import com.alfresco.api.v1.dto.FizzBuzzDto;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.alfresco.FizzBuzzType.*;
+import static com.alfresco.type.FizzBuzzType.*;
 import static java.util.stream.Collectors.*;
 
-public class FizzBuzz {
+@Service
+public class FizzBuzzService {
 
     /**
      * Transforms a contiguous range of integers to a FizzBuzz string
@@ -15,14 +20,16 @@ public class FizzBuzz {
      * @param endNumber the inclusive upper bound
      * @return a FizzBuzz string
      */
-    public String transformRangeAndReport(int startNumber, int endNumber) {
+    public FizzBuzzDto transformRangeAndReport(int startNumber, int endNumber) {
         String transformedFizzBuzz = IntStream.rangeClosed(startNumber, endNumber)
                 .mapToObj(this::transformNumber)
                 .collect(joining(" "));
 
         String reportResult = getReport(transformedFizzBuzz);
 
-        return transformedFizzBuzz + "\n" + reportResult;
+        return FizzBuzzDto.builder()
+                .value(transformedFizzBuzz + "\n" + reportResult)
+                .build();
     }
 
     /**
@@ -72,11 +79,12 @@ public class FizzBuzz {
      */
     public String getReport(String fizzBuzzString) {
         Map<FizzBuzzType, Long> reportData = Stream.of(fizzBuzzString.split(" "))
+                .filter(value -> !value.isEmpty())
                 .map(value -> FizzBuzzType.getInstance(value).orElse(INTEGER))
                 .collect(groupingBy(stringValue -> stringValue, counting()));
 
         return Stream.of(FizzBuzzType.values())
-                .map(type -> type.getValue() + ": " + reportData.get(type))
+                .map(type -> type.getValue() + ": " + reportData.getOrDefault(type, 0L))
                 .collect(joining(" "));
     }
 

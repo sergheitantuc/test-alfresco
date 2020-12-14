@@ -1,4 +1,4 @@
-package com.alfresco;
+package com.alfresco.type;
 
 import java.util.HashMap;
 import java.util.Map;
