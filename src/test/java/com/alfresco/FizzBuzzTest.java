@@ -59,4 +59,24 @@ public class FizzBuzzTest {
 
         assertThat(result).isEqualTo("1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz");
     }
+
+    @Test
+    public void getReport() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+
+        String result = fizzBuzz.getReport("1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz");
+
+        assertThat(result).isEqualTo("fizz: 4 buzz: 3 fizzbuzz: 1 alfresco: 2 integer: 10");
+    }
+
+    @Test
+    public void getFizzBuzzStringAndReport() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+
+        String result = fizzBuzz.transformRangeAndReport(1, 20);
+
+        assertThat(result).isEqualTo(
+                "1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz\n" +
+                "fizz: 4 buzz: 3 fizzbuzz: 1 alfresco: 2 integer: 10");
+    }
 }

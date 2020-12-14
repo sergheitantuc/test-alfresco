@@ -1,10 +1,29 @@
 package com.alfresco;
 
+import java.util.Map;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.joining;
+import static com.alfresco.FizzBuzzType.*;
+import static java.util.stream.Collectors.*;
 
 public class FizzBuzz {
+
+    /**
+     * Transforms a contiguous range of integers to a FizzBuzz string
+     * @param startNumber the (inclusive) initial value
+     * @param endNumber the inclusive upper bound
+     * @return a FizzBuzz string
+     */
+    public String transformRangeAndReport(int startNumber, int endNumber) {
+        String transformedFizzBuzz = IntStream.rangeClosed(startNumber, endNumber)
+                .mapToObj(this::transformNumber)
+                .collect(joining(" "));
+
+        String reportResult = getReport(transformedFizzBuzz);
+
+        return transformedFizzBuzz + "\n" + reportResult;
+    }
 
     /**
      * Transforms a contiguous range of integers to a FizzBuzz string
@@ -25,13 +44,13 @@ public class FizzBuzz {
      */
     public String transformNumber(int number) {
         if (numberContainsDigit(number, 3)) {
-            return "alfresco";
+            return ALFRESCO.getValue();
         }
 
         String result = "";
 
-        result += number % 3 == 0? "fizz" : "";
-        result += number % 5 == 0? "buzz" : "";
+        result += number % 3 == 0? FIZZ.getValue() : "";
+        result += number % 5 == 0? BUZZ.getValue() : "";
 
         return result.isEmpty()? Integer.toString(number) : result;
     }
@@ -44,6 +63,21 @@ public class FizzBuzz {
      */
     public boolean numberContainsDigit(int number, int digit) {
         return Integer.toString(number).contains(Integer.toString(digit));
+    }
+
+    /**
+     * Produces a report showing how many times the FizzBuzzType appears in the given string
+     * @param fizzBuzzString a fizz buzz string
+     * @return the report
+     */
+    public String getReport(String fizzBuzzString) {
+        Map<FizzBuzzType, Long> reportData = Stream.of(fizzBuzzString.split(" "))
+                .map(value -> FizzBuzzType.getInstance(value).orElse(INTEGER))
+                .collect(groupingBy(stringValue -> stringValue, counting()));
+
+        return Stream.of(FizzBuzzType.values())
+                .map(type -> type.getValue() + ": " + reportData.get(type))
+                .collect(joining(" "));
     }
 
 }
