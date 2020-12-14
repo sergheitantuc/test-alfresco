@@ -9,4 +9,5 @@ import java.io.Serializable;
 @AllArgsConstructor @NoArgsConstructor
 public class FizzBuzzDto implements Serializable {
     private String value;
+    private String report;
 }

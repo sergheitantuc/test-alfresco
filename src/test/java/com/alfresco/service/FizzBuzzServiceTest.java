@@ -77,9 +77,11 @@ public class FizzBuzzServiceTest {
 
         FizzBuzzDto result = fizzBuzzService.transformRangeAndReport(1, 20);
 
-        final String expectedValue = "1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz\n" +
-                "fizz: 4 buzz: 3 fizzbuzz: 1 alfresco: 2 integer: 10";
+        final String expectedValue = "1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz";
+        final String expectedReport = "fizz: 4 buzz: 3 fizzbuzz: 1 alfresco: 2 integer: 10";
 
-        assertThat(result).returns(expectedValue, from(FizzBuzzDto::getValue));
+        assertThat(result)
+                .returns(expectedValue, from(FizzBuzzDto::getValue))
+                .returns(expectedReport, from(FizzBuzzDto::getReport));
     }
 }

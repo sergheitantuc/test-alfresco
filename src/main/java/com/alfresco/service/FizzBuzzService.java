@@ -28,7 +28,8 @@ public class FizzBuzzService {
         String reportResult = getReport(transformedFizzBuzz);
 
         return FizzBuzzDto.builder()
-                .value(transformedFizzBuzz + "\n" + reportResult)
+                .value(transformedFizzBuzz)
+                .report(reportResult)
                 .build();
     }
 

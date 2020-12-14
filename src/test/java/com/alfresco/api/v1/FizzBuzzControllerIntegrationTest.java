@@ -21,8 +21,8 @@ public class FizzBuzzControllerIntegrationTest {
     @Test
     public void getFizzBuzzString() throws Exception {
 
-        final String expectedValue = "1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz\n" +
-                "fizz: 4 buzz: 3 fizzbuzz: 1 alfresco: 2 integer: 10";
+        final String expectedValue = "1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz";
+        final String expectedReport = "fizz: 4 buzz: 3 fizzbuzz: 1 alfresco: 2 integer: 10";
 
         mockMvc.perform(get("/api/v1/fizz-buzz-values")
                 .param("startNumber", "1")
@@ -30,7 +30,8 @@ public class FizzBuzzControllerIntegrationTest {
                 .accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
-                .andExpect(jsonPath("$.value").value(expectedValue));
+                .andExpect(jsonPath("$.value").value(expectedValue))
+                .andExpect(jsonPath("$.report").value(expectedReport));
     }
 
     @Test
