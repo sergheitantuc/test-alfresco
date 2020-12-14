@@ -7,10 +7,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FizzBuzzTest {
 
     @Test
-    public void transformToString_fizz() {
+    public void transformToString_alfresco() {
         FizzBuzz fizzBuzz = new FizzBuzz();
 
         String result = fizzBuzz.transformNumber(3);
+
+        assertThat(result).isEqualTo("alfresco");
+    }
+
+    @Test
+    public void transformToString_fizz() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+
+        String result = fizzBuzz.transformNumber(6);
 
         assertThat(result).isEqualTo("fizz");
     }
@@ -48,6 +57,6 @@ public class FizzBuzzTest {
 
         String result = fizzBuzz.transformRange(1, 20);
 
-        assertThat(result).isEqualTo("1 2 fizz 4 buzz fizz 7 8 fizz buzz 11 fizz 13 14 fizzbuzz 16 17 fizz 19 buzz");
+        assertThat(result).isEqualTo("1 2 alfresco 4 buzz fizz 7 8 fizz buzz 11 fizz alfresco 14 fizzbuzz 16 17 fizz 19 buzz");
     }
 }

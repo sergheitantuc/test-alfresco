@@ -24,12 +24,26 @@ public class FizzBuzz {
      * @return a FizzBuzz string
      */
     public String transformNumber(int number) {
+        if (numberContainsDigit(number, 3)) {
+            return "alfresco";
+        }
+
         String result = "";
 
         result += number % 3 == 0? "fizz" : "";
         result += number % 5 == 0? "buzz" : "";
 
         return result.isEmpty()? Integer.toString(number) : result;
+    }
+
+    /**
+     * Checks if the given number contains the given digit
+     * @param number the number to be tested
+     * @param digit element whose presence in the number is to be tested
+     * @return {@code true} if the number contains the specified digit
+     */
+    public boolean numberContainsDigit(int number, int digit) {
+        return Integer.toString(number).contains(Integer.toString(digit));
     }
 
 }
